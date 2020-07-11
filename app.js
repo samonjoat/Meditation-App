@@ -12,7 +12,7 @@ const app = () => {
   outline.style.strokeDashoffset = outlineLength;
 
   play.addEventListener("click", () => {
-    checkPLaying(song);
+    checkPlaying(song);
   });
 
   const checkPlaying = (song) => {
@@ -25,6 +25,16 @@ const app = () => {
       video.pause();
       play.src = "./svg/play.svg";
     }
+  };
+
+  song.ontimeupdate = () => {
+    let currentTime = song.currentTime;
+    let elapsed = fakeDuration - currentTime;
+    let seconds = Math.floor(elapsed % 60);
+    let minutes = Math.floor(elapsed / 60);
+
+    let progress = outlineLength - (currentTime / fakeDuration) * outlineLength;
+    outline.style.strokeDashoffset = progress;
   };
 };
 
